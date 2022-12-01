@@ -1,0 +1,27 @@
+.homeContainer{
+    display: flex;
+    width: 100%;
+}
+
+.profile{
+    display: flex;
+}
+
+.profileRight{
+    flex:9;
+}
+
+.profileRightBottom{
+   display: flex;
+}
+
+.scrollClass{
+overflow: scroll;
+position: sticky;
+height: 100vh;
+
+}
+.scrollClass::-webkit-scrollbar {
+display: none;
+}
+

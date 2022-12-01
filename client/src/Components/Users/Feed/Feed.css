@@ -1,0 +1,14 @@
+.feed{
+    flex: 6;
+
+}
+
+.feedWrapper{
+    padding: 20px;
+}
+
+/* .postDiv {
+    overflow: scroll;
+    position: sticky;
+    height: 100vh;
+} */
