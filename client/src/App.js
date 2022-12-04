@@ -13,7 +13,10 @@ import Chat from './Pages/User/Chat/Chat';
 import Test from './Pages/Test';
 import AdminPostPage from './Pages/Admin/AdminPost';
 import UserLandingPage from './Pages/User/UserLandingPage';
-import Testtwo from './Pages/Testtwo';
+import CourseView from './Pages/CourseView';
+import Roundedstory from './Components/Users/Roundstory/Roundedstory';
+import Testtwo from './Pages/User/Testtwo';
+import CourseFeed from './Pages/User/CourseFeed';
 
 function App() {
   return (
@@ -27,11 +30,14 @@ function App() {
               <Route path='/profile/:username' element={<ProfilePage/>}/>
               <Route path='/userProfile' element={<UserProfile/>}/> 
               <Route path='/chat' element={<Chat/>}/> 
+              <Route path='/coursefeed' element={<CourseFeed/>}/> 
 
 
 
               <Route path='/test' element={<Test/>} />
-              <Route path='/testtwo' element={<Testtwo/>} />
+              <Route path='/test2' element={<Testtwo/>} />
+              <Route path='/courseview' element={<CourseView/>} />
+              <Route path='story' element={<Roundedstory />} />
 
           </Routes>
           <Routes>  

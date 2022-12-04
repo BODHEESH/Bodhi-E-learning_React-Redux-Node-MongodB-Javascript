@@ -5,10 +5,26 @@ import { useSelector } from 'react-redux'
 import Post from '../Post/Post'
 import Share from '../Share/Share'
 import './Feed.css'
+import {io} from 'socket.io-client'
+import Navbar from '../Navbar.js/Navbar'
+
 
 function Feed() {
   const user = useSelector((state)=> state.user)
    const [posts,setPosts]=useState([])
+   const [socket,setSocket]=useState(null)
+   
+
+   useEffect(()=>{
+    setSocket(io('http://localhost:2002'))
+  },[])
+
+  useEffect(()=>{
+    socket?.emit("addUser",user._id)
+  },[socket,user])
+
+
+
    useEffect (()=>{
       const fetchPost=async()=>{
         const res=await axios.get(`http://localhost:5000/post/timeline/${user._id}`,
@@ -22,9 +38,12 @@ function Feed() {
       fetchPost()
    },[])
 
-  console.log(posts,'kkkkkkkkkkkkkkkkkkkkkk');
 
   return (
+    <>
+    <div>
+    <Navbar socket={socket}/>
+    </div>
     <div className='feed'>
       <div className='feedWrapper'>
         <Share/>
@@ -32,7 +51,7 @@ function Feed() {
         <h1>No feeds to shown</h1>:
          <div >
          {posts.map((p)=>(
-             <Post key={p.id} post={p}/>
+             <Post key={p.id} post={p} socket={socket}/>
         ))}
          </div>
         
@@ -42,6 +61,7 @@ function Feed() {
        
       </div>
     </div>
+    </>
   )
 }
 

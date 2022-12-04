@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/userSlice";
 import { MdRssFeed } from "react-icons/md";
 import { GiTeacher } from "react-icons/gi";
+import { GiSpellBook } from "react-icons/gi";
 
 
 function Sidebar() {
@@ -28,10 +29,11 @@ function Sidebar() {
     const menus = [
         { name: "Home", link: "/landingpage", icon: BiHome },
         { name: "Feed", link: "/home", icon: MdRssFeed },
-        // { name: "messages", link: "/chat", icon: FiMessageSquare },
+        { name: "messages", link: "/chat", icon: FiMessageSquare },
         { name: "Notifications", link: "/home", icon: MdNotificationsNone },
-        { name: "Upload Course", link: "/home", icon: BiMessageSquareAdd },
+        { name: "Upload Course", link: "/userProfile", icon: BiMessageSquareAdd },
         { name: "Educators", link: "/home", icon: GiTeacher },
+        { name: "Courses Available", link: "/coursefeed", icon: GiSpellBook },
         { name: "Setting", link: "/home", icon: RiSettings4Line },
         { name: "My Profile", link: "/userProfile", icon: CgProfile ,bottom:true},
         { name: "Logout", link: "/", icon: HiOutlineLogout ,},
@@ -48,7 +50,7 @@ function Sidebar() {
             
           {/* <h2 hidden className="font-bold text-xl lg:block">LOGO</h2> */}
         </div>
-        <div className=" flex flex-col gap-6 justify-start relative md:items-center lg:items-start">
+        <div className=" flex flex-col gap-4 justify-start relative md:items-center lg:items-start">
           {menus?.map((menu, i) => (
             <Link
               to={menu?.link}

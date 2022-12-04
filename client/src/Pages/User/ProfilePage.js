@@ -9,9 +9,9 @@ function ProfilePage() {
   return (
     <div>
          <>
-      <Navbar/>
+      <Navbar />
       <div className="profile">
-      <div className="profileRight">
+      <div className="profileRight ">
         <Profile/>
       </div>
       </div>

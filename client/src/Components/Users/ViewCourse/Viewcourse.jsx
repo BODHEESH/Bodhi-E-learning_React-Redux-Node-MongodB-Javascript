@@ -38,13 +38,13 @@ function Viewcourse() {
                             </svg>
                             <span className="relative"> MERN STACK: </span>
                         </span>{' '}
-                         It is one of the most popular user-friendly Full Stack Web Development structures.
+                        It is one of the most popular user-friendly Full Stack Web Development structures.
                     </h2>
                     <p className="text-base text-gray-700 md:text-lg">
-                   
-                     It helps us improve our applications to a great extent. You don't need to learn 
-                     multiple programming languages for web application development because MERN stack covers
-                      both front-end as well as back-end.
+
+                        It helps us improve our applications to a great extent. You don't need to learn
+                        multiple programming languages for web application development because MERN stack covers
+                        both front-end as well as back-end.
                     </p>
                 </div>
                 <div className="mx-auto lg:max-w-2xl">
@@ -71,6 +71,11 @@ function Viewcourse() {
                         </a>
                     </div>
                 </div>
+
+
+                
+
+
                 {/* start course */}
                 <section class="py-20">
                     <h1 class="mb-12 text-center font-sans text-5xl font-bold">Best Course in the Internet</h1>
@@ -86,7 +91,7 @@ function Viewcourse() {
 
                                         Please login to enroll in the course.
 
-                                        </p>
+                                    </p>
                                     {/* <p class="text-md font-light text-gray-400">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse vel neque ipsam?</p> */}
                                     <div class="justify-center mt-4 flex flex-wrap items-center">
                                         {/* <div class="mr-2 mt-1 rounded-2xl bg-blue-100 py-1.5 px-4 text-xs text-gray-600"><a> Open</a></div> */}

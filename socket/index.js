@@ -7,21 +7,22 @@ const io=require("socket.io")(2002,{
 let users=[]
 
 const addUser=(userId,socketId)=>{
+    console.log(userId,socketId,"{{{{{{{{{{{{{{{");
     !users.some((user)=>user.userId===userId)&&
     users.push({userId,socketId})
 
 }
 
-const removeUser=(socketId)=>{
+const removeUser=(socketId)=>{  
    users=users.filter((user)=>user.socketId!==socketId) 
 }
 
 
 const getUser=(userId)=>{
     return users.find((user)=>user.userId===userId)
-}
+}  
 
-io.on("connection",(socket)=>{
+io.on("connection",(socket)=>{     
     /* -------------------------------------------------------------------------- */
     /*                                when connect                                */
     /* -------------------------------------------------------------------------- */
@@ -46,14 +47,25 @@ io.on("connection",(socket)=>{
 
       })
     })
-
-
-
+  
+    /* -------------------------------------------------------------------------- */
+    /*                              For Notifications                             */
+    /* -------------------------------------------------------------------------- */
+    socket.on("sendNotification",({senderId,receiverId,type})=>{
+        console.log(senderId,receiverId,type);
+       const receiver=getUser(receiverId)
+       console.log(receiver,"-----------------------------------");
+       io.to(receiver.socketId).emit("getNotification",{
+          senderId,
+          type,
+       })  
+    })   
 
     /* -------------------------------------------------------------------------- */
     /*                               when disconnect                              */
     /* -------------------------------------------------------------------------- */
     socket.on("disconnect",()=>{
+     console.log('user is disconnetced');   
      removeUser(socket.id)  
      io.emit("getUsers",users)   
     })

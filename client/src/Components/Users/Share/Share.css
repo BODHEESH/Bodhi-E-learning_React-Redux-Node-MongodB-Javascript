@@ -14,7 +14,7 @@
     /* color: red; */
     margin-bottom: 20px;
     box-shadow: 10px 10px 5px rgb(90, 87, 87);
-    width: 100%;
+    width: 98%;
     margin: 10px;
 }
 
@@ -33,6 +33,10 @@
     border: none;
     width: 90%;
     height: 20%;
+}
+
+.shareInput::-webkit-scrollbar {
+    display: none;
 }
 
 .shareInput:focus{

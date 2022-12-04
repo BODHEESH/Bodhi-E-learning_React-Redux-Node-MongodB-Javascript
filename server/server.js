@@ -17,6 +17,7 @@ app.use('/',require('./routes/authRouter'))
 app.use('/post',require('./routes/postRouter'))
 app.use('/admin',require('./routes/adminRouter'))
 app.use('/chat',require('./routes/chatRouter'))
+app.use('/course',require('./routes/courseRouter'))
 
 
 const URI=process.env.MONGODB_URL

@@ -61,6 +61,8 @@ function Share() {
     }
     try {
       await axios.post('http://localhost:5000/post', newPost)
+      window.location.reload()
+
     } catch (err) {
       console.log(err);
     }

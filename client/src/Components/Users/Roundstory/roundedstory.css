@@ -1,0 +1,26 @@
+
+
+.container::-webkit-scrollbar{
+    display: none;
+    /* overflow-y: hidden; 
+    overflow-x: hidden;  */
+}
+
+
+.storybutton {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    color: white;
+    background-color: #5271ff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }

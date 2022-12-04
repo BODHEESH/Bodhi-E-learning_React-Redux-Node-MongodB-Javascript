@@ -11,7 +11,6 @@ function Rightbar() {
   const user = useSelector((state) => state.user);
   const [check, setCheck] = useState(false);
 
-  console.log(users,"users from useeffect setting---");
 
   useEffect(() => {
     console.log("button changed");
