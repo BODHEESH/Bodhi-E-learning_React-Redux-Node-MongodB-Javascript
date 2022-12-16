@@ -1,5 +1,5 @@
 .topbarContainer{
-     height: 50px;
+     height: 70px;
      width: 100%;
      box-shadow: inset;
      background-color: #FFFF;
@@ -82,11 +82,11 @@
   }
 
   .topbarIconBadge{
-    width: 75%;
+    width: 60%;
     height: 15px;
     color: white;
     position: absolute;
-    top: -5px;
+    top: -7px;
     right: -5px;
     border-radius: 50%;
     display: flex;
@@ -101,6 +101,12 @@
     border-radius: 50%;
     object-fit: cover;
 }
+  .profileImg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
 
 .notifications{
@@ -112,6 +118,7 @@
   font-weight: 300;
   display: flex;
   flex-direction: column;
+  z-index: 30;
 }
 
 .notification{

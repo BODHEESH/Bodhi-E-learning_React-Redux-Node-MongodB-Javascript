@@ -1,0 +1,13 @@
+.signupmaindiv {
+    height: 110vh;
+    width:100vw ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    background-image: url("https://files.oyebesmartest.com/uploads/preview/flower-macrpx.jpg");
+}
+
+.signupForm{
+    backdrop-filter: blur(10px);
+}

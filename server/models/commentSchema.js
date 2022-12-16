@@ -1,9 +1,12 @@
+const Users=require('../models/userModel')
+
 const mongoose=require('mongoose')
 
 const CommentSchema=new mongoose.Schema({
     userId:{
         type:String,
-        required:true
+        required:true,
+        ref:Users
     },
     postId:{
         type:String,

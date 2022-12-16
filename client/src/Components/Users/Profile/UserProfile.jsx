@@ -9,6 +9,9 @@ import { login } from '../../../redux/userSlice'
 import Courses from './Courses';
 import Feed from '../Feed/Feed';
 import Post from '../Post/Post';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import { FcPicture } from "react-icons/fc";
+   
 
 
 
@@ -24,31 +27,78 @@ function UserProfile() {
   const [showConnections, setShowConnections] = useState(false);
   const [showFeed, setShowFeed] = useState(true);
   const [courses, setCourses] = useState('')
+  const [file,setFile]= useState([])
+  const [userData , setUserdata] = useState(false)
+  const [profile , setProfile] = useState('')
 
 
-  const handleEdit = async (e) => {
-    e.preventDefault();
+  useEffect(()=>{
+    const fetchUser = async () =>{
+      const response = await axios.get(`http://localhost:5000/userdata/${user._id}`)
+    setProfile(response.data)
+    dispatch(login(response.data))
+    localStorage.removeItem('user')
+    localStorage.setItem('user',JSON.stringify(response.data))
+    }
+    fetchUser();
+
+  },[userData])
+
+
+  
+ const handleChange = (e) => {
+  const { name, value } = e.target;
+  setEdit({
+    ...edit,
+    [name]: value,
+  })
+};
+
+
+ const handleEdit=async(e)=>{
+  e.preventDefault();
+   const editPost={
+    ...edit
+   }
+
+   if(file){
+    const data=new FormData();
+    const fileName=file.name
+    data.append("file",file)
+    data.append("name",fileName)
+    editPost.profilePicture=fileName
+    
     try {
-      await axios.put("http://localhost:5000/" + user._id, { ...edit, userId: user._id })
-      axios.put("http://localhost:5000/" + user._id, { ...edit, userId: user._id })
-        .then((response) => {
-          dispatch(login(response.data))
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Your details is updated successfully',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          console.log(response, 'updated suceesfullyyyyyyyyyyyyyyyyyy');
-
-        });
-      SetShowMod(false)
-
-    } catch (error) { }
-
+      await axios.post('http://localhost:5000/post/upload',data ,
+      // {headers:{"x-access-token":localStorage.getItem('usertoken')}}
+      )
+      // window.location.reload()
+      
+    } catch (error) {
+      console.log(error);
+    }
   }
+  
+  try {
+        const response=await axios.put("http://localhost:5000/"+user._id, {editPost,userId:user._id})
+        setUserdata(!userData)
+        console.log(response.data," res data on user profile -------------------");
+         dispatch(login(response.data))
+         localStorage.removeItem('user')
+         localStorage.setItem('user',JSON.stringify(response.data))
+         Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your details is updated successfully',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        
+      SetShowMod(false)  
+    
+  } catch (error) {}
 
+}
 
 
   useEffect(() => {
@@ -65,13 +115,6 @@ function UserProfile() {
     fetchPost();
   }, [user._id])
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEdit({
-      ...edit,
-      [name]: value,
-    })
-  };
 
 
 
@@ -110,13 +153,12 @@ function UserProfile() {
             <div class="w-8/12 md:w-7/12 ml-4">
               <div class="md:flex md:flex-wrap md:items-center mb-4">
                 <h2 class="text-3xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
-                  {user.username}
+                  {/* {user.username} */}
+                  {profile.username}
                 </h2>
                 {/* badge  */}
-                <span class="inline-block fas fa-certificate fa-lg text-blue-500 
-                               relative mr-6 text-xl transform -translate-y-2" aria-hidden="true">
-                  <i class="fas fa-check text-white text-xs absolute inset-x-0
-                               ml-1 mt-px"></i>
+                <span class="inline-block fas fa-certificate fa-lg text-blue-500 relative mr-6 text-xl transform -translate-y-2" aria-hidden="true">
+                  <i class="fas fa-check text-white text-xs absolute inset-x-0  ml-1 mt-px"></i>
                 </span>
                 <a href="#" class="bg-blue-500 px-2 py-1 
                       text-white font-semibold text-sm rounded block text-center 
@@ -183,69 +225,78 @@ function UserProfile() {
             </ul>
             {showMod ? (
               <>
-                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
-                  <div className="relative w-auto my-6 mx-auto max-w-3xl">
-
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                      <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                        <h3 className="text-3xl font-semibold">Edit your details</h3>
-                        <button
-                          className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                          onClick={() => SetShowMod(false)}
-                        >
-                          <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                            ×
-                          </span>
-                        </button>
-                      </div>
-                      <div className="relative p-6 flex-auto">
-                        <input
-                          type="text"
-                          name="username"
-                          placeholder="Enter the username"
-                          onChange={handleChange}
-                        />
-                        <input className='ml-5'
-                          type="file"
-
-                        />
-                        {/* <span className='text-sm'>Update your profile pic</span> */}
-                        <br /> <br />
-                        <input
-                          type="text"
-                          name="email"
-                          placeholder="Enter the email"
-                          onChange={handleChange}
-                        />
-                        <input className='ml-5'
-                          type="password"
-                          name="password"
-                          placeholder="change password"
-                          onChange={handleChange}
-                        />
-                      </div>
-
-                      <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                        <button
-                          className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => SetShowMod(false)}
-                        >
-                          Close
-                        </button>
-                        <button
-                          className="bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={handleEdit}
-                        >
-                          Save Changes
-                        </button>
-                      </div>
+              <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
+                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+               
+                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                      <h3 className="text-3xl font-semibold">Edit your details</h3>
+                      <button
+                        className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                        onClick={() => SetShowMod(false)}
+                      >
+                        <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <div className="relative p-6 flex-auto">
+                        <label for='file' className="shareOptions p-3">
+                            <FcPicture htmlColor="tomato" className='shareIcon'/>
+                            <span className='shareOptionText'>Update your profile photo</span>
+                            <input style={{display:"none"}} type='file'name='file' id='file' onChange={(e)=>{{setFile(e.target.files[0])}}} accept=".png,.jpg,.webp"/>
+                        </label>
+                      
+                      <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter the username"
+                        onChange={handleChange}
+                      />
+                      {/* <input
+                        className='ml-5'
+                        type="text"
+                        name="desc"
+                        placeholder="Change bio"
+                        onChange={handleChange}
+                      /> */}
+                   
+                      <br /> <br />
+                      <input 
+                        type="text"
+                        name="email"
+                        placeholder="Enter the email"
+                        onChange={handleChange}
+                      />
+                       <input className='ml-5'
+                        type="password"
+                        name="password"
+                        placeholder="change password"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    
+                    <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                      <button
+                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => SetShowMod(false)}
+                      >
+                        Close
+                      </button>
+                      <button
+                        className="bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={handleEdit}
+                      >
+                        Save Changes
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-              </>
+              </div>
+              <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+            </>
             ) : null}
 
 
@@ -265,7 +316,6 @@ function UserProfile() {
                     <>
                       {obj?.img?.length !== 0 && (
                         <div class="w-1/3 p-px md:px-3">
-
                           <a href="#">
                             <article class="post bg-gray-100 text-white relative pb-full md:mb-6">
                               <img class="w-full h-full absolute left-0 top-0 object-cover" src={PF + obj.img} alt="image" />

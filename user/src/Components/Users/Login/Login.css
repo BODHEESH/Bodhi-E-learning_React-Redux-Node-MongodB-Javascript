@@ -1,0 +1,20 @@
+.swal-wide{
+    width:850px !important;
+}
+
+.loginForm{
+    backdrop-filter: blur(15px);
+    background:rgba(255, 255, 255, 0.271);
+
+
+}
+
+.maindiv{
+    height: 100vh;
+    width:100vw ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    background-image: url("https://img.freepik.com/free-photo/ready-back-school_1134-12.jpg");
+}

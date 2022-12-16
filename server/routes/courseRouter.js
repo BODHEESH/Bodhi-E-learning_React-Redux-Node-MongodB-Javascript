@@ -1,7 +1,7 @@
 const express=require('express')
 const router=express.Router()
 const multer=require('multer');
-const { addCourse, getCourses } = require('../controllers/courseCtrl');
+const { addCourse, getCourses, courselist, enrollCourse, saveCourse, getSingleCourse, } = require('../controllers/courseCtrl');
 const check = require('../middleware/verify');
 
 
@@ -29,11 +29,20 @@ router.post("/",addCourse)
 
 router.get('/:id',getCourses)
 
+router.get('/getSingleCourse/:id',getSingleCourse)  
+
+router.get('/allcourses/list',courselist)
+
+router.put('/enroll/:id',enrollCourse) 
+
+router.put('/savecourse/save/:id',saveCourse) 
+
+
 // router.put('/:id',updatePost) 
 
 // router.delete('/:id',deletePost) 
 
-// router.put('/like/:id',likePost) 
+
 
 
 

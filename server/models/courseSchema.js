@@ -9,6 +9,14 @@ const courseSchema=new mongoose.Schema({
         type:String,
         max:500
     },
+    enrollments:{
+        type:Array,
+        default:[]
+    },
+    BookmarkedUsers:{
+        type:Array,
+        default:[]
+     },
     desc:{
         type:String,
         max:500
@@ -26,7 +34,13 @@ const courseSchema=new mongoose.Schema({
     review:{
         type:Array,
         default:[]
-    }
+    },
+    domain:{
+        type:String
+    },
+    educator:{
+        type:String
+    },
     },{
         timestamps:true 
     })

@@ -15,11 +15,16 @@ import { Favorite, MoreVert } from '@mui/icons-material';
 import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
 import ShareIcon from '@mui/icons-material/Share';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { BiHome} from "react-icons/bi";
+import { FiMessageSquare} from "react-icons/fi";
+import { MdNotificationsNone } from "react-icons/md";
 
 
 import bodhiLenear from "../../../assets/bodhiLenear.png";
 
 function Navbar({ socket }) {
+
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
@@ -161,37 +166,35 @@ function Navbar({ socket }) {
         </div>
         <div className="topbarRight">
           <div className='topbarIcons'>
-            <div className='topbarIconItem'>
+            {/* <div className='topbarIconItem'>
               <Link to='/landingpage' style={{ textDecoration: "none" }}>
-                <HomeIcon />
+                <BiHome className=' h-6'/>
               </Link>
-            </div>
-            <div className='topbarIconItem'>
+            </div> */}
+            {/* <div className='topbarIconItem'>
               <FavoriteBorderIcon />
-            </div>
+            </div> */}
             {/* <div className='topbarIconItem'>
         <AddBoxIcon/>
         </div> */}
             <div className='topbarIconItem'>
               <Link to='/chat'>
-                <ChatIcon />
+                <FiMessageSquare className=' text-3xl'/>
               </Link>
               <span className="topbarIconBadge">2</span>
               {/* <ChatIcon /> */}
             </div>
             <div className='topbarIconItem flex'>
-              <NotificationsIcon onClick={() => setShowNotification(!showNotification)} />
-              { notifications && <span className="topbarIconBadge">{notifications.length}</span>}
-              <h1>{notifications.length}</h1>
-              {/* {console.log(notifications.length,"+++")} */}
+              <MdNotificationsNone className='text-3xl' onClick={() => setShowNotification(!showNotification)} />
+              { notifications && <span className="topbarIconBadge ">{notifications.length}</span>}             
             </div>
           </div>
           <>
             <div class="flex justify-center">
               <div class="relative  flex justify-center ">
 
-                <span><h3 className='font-bold'>{user.username}</h3></span>
-                <img src="https://i.pinimg.com/736x/df/c8/e2/dfc8e2e6d1959ee1e4209a3d2918f190.jpg" alt="" className="topbarImg" onClick={() => setDrop(!drop)} />
+                 {/* <span><h3 className='font-bold'>{user.username}</h3></span> */}
+                <img src={user.profilePicture ? PF + user.profilePicture : 'https://i.stack.imgur.com/34AD2.jpg'} alt="" className="profileImg" onClick={() => setDrop(!drop)} />
 
                 {drop ?
                   <div class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800">

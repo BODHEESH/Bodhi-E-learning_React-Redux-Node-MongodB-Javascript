@@ -263,7 +263,8 @@ function Chat() {
                     <>
 
                       <div className='conversationsss p-3 shadow-zinc-400'>
-                        <img className='flex h-11 w-11 rounded-full ' src={PF + receiverpic} alt='' />
+                        <img className='flex h-11 w-11 rounded-full ' src="https://cdn2.vectorstock.com/i/1000x1000/34/96/flat-business-man-user-profile-avatar-in-suit-vector-4333496.jpg" alt='pic' />
+                        {/* <img className='flex h-11 w-11 rounded-full ' src={PF + receiverpic} alt='pic' /> */}
                         <span className='ml-5'>{receivername}</span>
                       </div>
 

@@ -117,7 +117,7 @@ const getPost=async(req,res)=>{
  const getPostComments=async(req,res)=>{
     // console.log(req.params.id);
     try {
-      const postComment=await Comments.find({postId:req.params.id})
+      const postComment=await Comments.find({postId:req.params.id}).populate("userId")
       res.json(postComment)
         
     } catch (error) {

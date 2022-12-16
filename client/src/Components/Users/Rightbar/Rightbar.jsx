@@ -7,26 +7,45 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 function Rightbar() {
-  const [users, setUsers] = useState([]);
-  const user = useSelector((state) => state.user);
-  const [check, setCheck] = useState(false);
+  const [users,setUsers]=useState([])
+  const user = useSelector((state)=> state.user)
+  const [check,setCheck]=useState(false)
+
+  const PF=process.env.REACT_APP_PUBLIC_FOLDER
+
 
 
   useEffect(() => {
     console.log("button changed");
   }, [check]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const allUsers = await axios.get(`/admin/users`);
-      if (allUsers) {
-        setUsers(allUsers.data);
-      } else {
-        console.log("error");
-      }
-    };
-    fetchUsers();
-  }, [check]);
+
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     const allUsers = await axios.get(`/admin/users`);
+  //     if (allUsers) {
+  //       setUsers(allUsers.data);
+  //     } else {
+  //       console.log("error");
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, [check]);
+
+
+  useEffect(()=>{
+    const fetchUsers=async()=>{
+     const allUsers=await axios.get(`/suggestions/${user._id}`)
+     if(allUsers){
+      setUsers(allUsers.data)
+     }else{
+      console.log('error');
+     }
+    }
+    fetchUsers()
+  },[check])
+
+
   const FollowUser = async (id) => {
     console.log("followed user");
     try {
@@ -49,30 +68,7 @@ function Rightbar() {
   };
   return (
     <div>
-      {/* <div className="fixed">
-      <h2 className="align-center justify-center p-5 text-blue-500 font-semibold">
-        {" "}
-        Suggetions
-      </h2>
-      {users.map((obj) => (
-        <>
-          {obj.username !== user.username && (
-            <div class="flex items-center relative p-4 w-full bg-white rounded-lg overflow-hidden shadow hover:shadow-md mb-5">
-              <Link to={`/profile/${obj.username}`}>
-                <img
-                  class="w-12 h-12 rounded-full bg-gray-100"
-                  src="/assets/avatar.jpg"
-                ></img>
-              </Link>
-              <div class="ml-3">
-                <p class="font-medium text-gray-800">{obj.username}</p>
-                <p class="text-sm text-gray-600">{obj.email}</p>
-              </div>
-            </div>
-          )}
-        </>
-      ))}
-    </div> */}
+
 
       <div className="rightBar">
         <div className="container">
@@ -87,8 +83,7 @@ function Rightbar() {
                       <Link to={`/profile/${obj.username}`}>
                         <img
                           class="w-12 h-12 rounded-full bg-gray-100"
-                          src="https://binaryinformatics.com/wp-content/uploads/2019/01/MERN-Stack-Development-and-Consulting-Services.jpg"
-                        ></img>
+                          src={obj.profilePicture ? PF + obj.profilePicture : 'https://i.stack.imgur.com/34AD2.jpg'}  alt=""></img>
                       </Link>
                       <span className="name">{obj.username}</span>
                     </div>
@@ -109,21 +104,8 @@ function Rightbar() {
               </>
             ))}
 
-            {/* <div className="user">
-      <div className="userInfo">
-        <img className="rightbarPic"
-          src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
-          alt=""
-        />
-        <span>Bodhi test</span>
-      </div>
-      <div className="buttons">
-        <button>follow</button>
-        <button>Skip</button>
-      </div>
-    </div> */}
           </div>
-          <div className="list">
+          {/* <div className="list">
             <span>Latest Courses</span>
             <div className="user">
               <div className="userInfo">
@@ -138,7 +120,7 @@ function Rightbar() {
                   <span>Bodhi test</span>
                   <p className=" pTag	text-decoration-color: #94a3b8; text-sm">
                     updated a new course
-                    <Link to="/testtwo" >
+                    <Link to="/coursefeed" >
                     <span className="font-bold text-blue-700">Click here</span>
                     </Link>
                   </p>
@@ -160,7 +142,7 @@ function Rightbar() {
                   <span>Bodhi test</span>
                   <p className=" pTag	text-decoration-color: #94a3b8; text-sm">
                     updated a new course
-                    <Link to="/testtwo" >
+                    <Link to="/coursefeed" >
                     <span className="font-bold text-blue-700">Click here</span>
                     </Link>
                   </p>
@@ -239,7 +221,7 @@ function Rightbar() {
                 <span>Bodhi test</span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

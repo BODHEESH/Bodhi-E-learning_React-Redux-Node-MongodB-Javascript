@@ -7,7 +7,7 @@ const io=require("socket.io")(2002,{
 let users=[]
 
 const addUser=(userId,socketId)=>{
-    console.log(userId,socketId,"{{{{{{{{{{{{{{{");
+    console.log(userId,socketId,"user id socket id in socket index");
     !users.some((user)=>user.userId===userId)&&
     users.push({userId,socketId})
 

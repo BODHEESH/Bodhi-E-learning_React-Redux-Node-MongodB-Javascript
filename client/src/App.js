@@ -17,6 +17,10 @@ import CourseView from './Pages/CourseView';
 import Roundedstory from './Components/Users/Roundstory/Roundedstory';
 import Testtwo from './Pages/User/Testtwo';
 import CourseFeed from './Pages/User/CourseFeed';
+import Landtest from './Pages/User/Landtest';
+import Mambaone from './Pages/User/Mambaone';
+import Notif from './Components/Component/Notif';
+import Allusers from './Pages/User/Allusers';
 
 function App() {
   return (
@@ -31,9 +35,13 @@ function App() {
               <Route path='/userProfile' element={<UserProfile/>}/> 
               <Route path='/chat' element={<Chat/>}/> 
               <Route path='/coursefeed' element={<CourseFeed/>}/> 
+              <Route path='/allusers' element={<Allusers/>}/> 
 
 
 
+              <Route path='/notification' element={<Notif/>} />
+              <Route path='/mamba1' element={<Mambaone/>} />
+              <Route path='/landingtest' element={<Landtest/>} />
               <Route path='/test' element={<Test/>} />
               <Route path='/test2' element={<Testtwo/>} />
               <Route path='/courseview' element={<CourseView/>} />

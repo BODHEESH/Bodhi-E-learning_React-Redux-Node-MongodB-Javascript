@@ -10,7 +10,7 @@ try {
     }).catch(error =>{
         res.json(error)
     })
-    
+         
 } catch (error) {
     console.log(error);
 }

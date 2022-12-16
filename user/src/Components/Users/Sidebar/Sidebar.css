@@ -1,0 +1,78 @@
+/*       SIDEBAR           */
+.sidebar-menu-container{
+    position: sticky;
+    width: 100%;
+    top: 8.6rem;
+    left: 0;
+    padding-top: 2em;
+    
+  }
+  .sidebar-card{
+    align-items: center;
+    grid-template-columns: minmax(0,auto)
+      1fr minmax(0,auto);
+  }
+  .sidebar-header{
+    padding: 1rem 0;
+  }
+  .sidebar-img{
+   grid-column: 1/2;
+   grid-row: 1/3;
+   border-radius: 50%;
+  }
+  .sidebar-hd-img{
+    width: 5.8rem;
+    height: 5.8rem;
+  }
+  .side-bar-img-alt{
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+  .sidebar-title{
+    align-self: end;
+  }
+  .sidebar-subtitle{
+    align-self: flex-start;
+    font-size: 1.2rem;
+     color: #888;
+  }
+  .sidebar-btn{
+    grid-column: 3/4;
+    grid-row: 1/3;
+    justify-self: end;
+     color: #3399ff;
+    cursor:pointer;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  .suggestions-header{
+    grid-template-columns: 1fr minmax(0,auto);
+    padding: .5rem 0;
+    margin-bottom: 1rem;
+  }
+  .suggestions-text{
+    font-size: 1.3rem;
+    color: #888;
+    font-weight: 500;
+  }
+  .sidebar-btn-alt{
+    font-size: 1.3rem;
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .sidebar-subtitle-alt{
+    font-size: 1.15rem;
+  }
+  .sidebar-card-alt{
+    margin-bottom:.7rem;
+  }
+  @media all and (max-width: 1000px){
+    .sidebar{
+      display: none;
+    }
+    .main-content{
+      grid-template-columns: 1fr  470px 1fr;
+      gap: 0;
+    }
+  }

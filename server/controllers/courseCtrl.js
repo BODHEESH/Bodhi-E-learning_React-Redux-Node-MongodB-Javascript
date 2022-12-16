@@ -8,6 +8,7 @@ const Course=require('../models/courseSchema')
 
 
 
+
 const addCourse=async(req,res)=>{
   console.log(req.body);
     const newCourse=new Course(req.body)
@@ -21,10 +22,22 @@ const addCourse=async(req,res)=>{
   }
 
   const getCourses=async(req,res)=>{
-    console.log(req.params.id," params id in get couses in course control");
+    // console.log(req.params.id," params id in get couses in course control");
     try {
        const course=await Course.find({userId:req.params.id})
-       console.log(course,"-------");
+      //  console.log(course,"-------");
+       res.json(course)
+    } catch (error) {
+       res.json(error)
+    } 
+
+  }
+
+  const getSingleCourse=async(req,res)=>{
+    console.log(req.params.id," params id in get couses in course control",req.body);
+    try {
+       const course=await Course.findOne({_id:req.params.id})
+       console.log(course,"000");
        res.json(course)
     } catch (error) {
        res.json(error)
@@ -33,9 +46,82 @@ const addCourse=async(req,res)=>{
   }
 
 
+  const courselist=async(req,res,next)=>{
+
+    console.log("trial console.............");
+    try {
+       const allcourse=await Course.find()
+   
+       res.json(allcourse)
+    } catch (error) {
+       res.json(error)
+    } 
+
+  }
+
+const enrollCourse = async (req, res , next) => {
+      console.log(req.body.userId);
+    console.log(req.params.id,"@@@@@@@@@@@@@@@");
+    try{
+        console.log('enrolllllll');
+        const course=await Course.findById(req.params.id)
+        const user=await Users.findById(req.body.userId)
+
+        // console.log(course,"course log after find by ID");
+        if(!course.enrollments.includes(req.body.userId)){
+            await course.updateOne({$push:{enrollments:req.body.userId}})
+            await user.updateOne({$push:{enrolledCourses:req.params.id}})
+            const enr = {
+              status:true
+            }
+            console.log('enrolllllll2222222222222');
+            res.json({enr})
+
+        }else{
+            await course.updateOne({$pull:{enrollments:req.body.userId}}) 
+            await user.updateOne({$pull:{enrolledCourses:req.params.id}})
+            const enr = {
+              status:false
+            }
+            console.log('enrolllllll333333333333333333');
+            res.json({enr})
+        }
+    }catch(error){
+        res.json(error)
+    }
+
+}
+
+const saveCourse = async(req, res) => {
+  console.log(req.body.userId,"user id and sid ");
+  console.log(req.params.id);
+
+  try {
+    const user=await Users.findById(req.body.userId)
+    const course=await Course.findById(req.params.id)
+
+    if(!course.BookmarkedUsers.includes(req.body.userId)){
+    await course.updateOne({$push:{BookmarkedUsers:req.body.userId}})
+
+     const saved=await Course.find()
+     console.log(saved,"numma scenaanu");
+      res.json({status:true, data:saved })
+  
+  }else{
+      await course.updateOne({$pull:{BookmarkedUsers:req.body.userId}})
+      res.json({status:false})
+  }
+    
+  } catch (error) {
+    res.json(error)
+  }
+}
 
 
-  module.exports={addCourse, getCourses}
+
+
+
+  module.exports={addCourse, getCourses, courselist, enrollCourse, saveCourse,getSingleCourse}
 
 //   const updatePost=async(req,res)=>{
 //     try{

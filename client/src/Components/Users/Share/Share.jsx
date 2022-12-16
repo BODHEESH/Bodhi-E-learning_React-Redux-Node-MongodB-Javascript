@@ -119,7 +119,7 @@ function Share() {
     <div className='share'>
       <div className='shareWrapper'>
         <div className="shareTop flex">
-          <img src={user.profilePicture ? user.profilePicture : 'https://i.stack.imgur.com/34AD2.jpg'} className='shareProfileImg' alt=""></img>
+          <img src={user.profilePicture ? PF + user.profilePicture : 'https://i.stack.imgur.com/34AD2.jpg'} className='shareProfileImg' alt=""></img>
           <textarea className="shareInput" placeholder={"What's in your mind " + user.username + "?"} onChange={(e) => { setDesc(e.target.value) }} multiple></textarea>
 
         </div>
