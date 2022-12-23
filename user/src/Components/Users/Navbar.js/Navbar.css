@@ -132,3 +132,7 @@
   border: gainsboro;
   justify-content: center;
 }
+
+.notificationDrop::-webkit-scrollbar {
+  display: none;
+}

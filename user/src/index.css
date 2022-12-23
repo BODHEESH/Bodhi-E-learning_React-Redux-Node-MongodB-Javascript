@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-
+/* 
 *{
   margin: 0;
   font-family: 'Roboto',sans-serif;
@@ -29,9 +29,7 @@ code {
 
 #theme:checked ~ .App{
   filter: invert(1);
-} 
+}  */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 

@@ -15,8 +15,8 @@ const Dashboard = () => {
     const Menus = [
     { dashboard: "Dashboard", src: "Chart_fill" },
     { post: "Posts", src: "Chat" },
-    // { reject: "Rejected List", src: "User" },
-    // { slot: "Booking Slots ", src: "Calendar" },
+    { reject: "Rejected List", src: "User" },
+    { slot: "Booking Slots ", src: "Calendar" },
     // { create: "Create Slots ", src: "Calendar" },
     // { progress: "Progress Status", src: "Search" },
   ];
@@ -87,9 +87,9 @@ const Dashboard = () => {
                 {Menu.title}
                 <Link to='/admin-users'>{Menu.dashboard}</Link>
                  <Link to='/admin-posts'>{Menu.post}</Link>
-                 {/* <Link to='/reject'>{Menu.reject}</Link>
-                <Link to='/slot'>{Menu.slot}</Link>
-                <Link to='/progress'>{Menu.progress}</Link>
+                 <Link to='/admin-reports'>{Menu.reject}</Link>
+                <Link to='/admin-courses'>{Menu.course}</Link>
+                {/* <Link to='/progress'>{Menu.progress}</Link>
                 <Link to='/create'>{Menu.create}</Link> */}
 
               </span>

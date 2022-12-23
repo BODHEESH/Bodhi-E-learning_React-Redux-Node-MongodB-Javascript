@@ -106,4 +106,22 @@ const getAllReports=async(req,res)=>{
     }
 }
 
+// const blockPost = async(req,res)=>{
+//     console.log(req.params.id,"++++++++++++++");
+//     try {
+//       Post.findByIdAndUpdate({_id: req.params.id},{
+//           $set:{
+//               status:"Blocked"
+//           }
+//       }).then(response =>{
+//           if(response) res.status(200).json({update: true})
+//       }).catch(error =>{
+//           res.json(error)
+//       })
+      
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+
 module.exports={getUsers,blockUser,UnblockUser,adminLogin,getAllPosts,getAllComment,getAllReports}

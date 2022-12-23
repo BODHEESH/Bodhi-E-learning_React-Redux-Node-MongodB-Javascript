@@ -18,7 +18,19 @@ const postSchema=new mongoose.Schema({
     likes:{
         type:Array,
         default:[]
-    }
+    },
+    reports:{
+        type:Array,
+        default:[]
+    },
+    reportedStatus:{
+        type:String,
+        default:'false'
+    },
+    // status: {
+    //     type:String,
+    //     default:"active" 
+    // }
     },{
         timestamps:true 
     })

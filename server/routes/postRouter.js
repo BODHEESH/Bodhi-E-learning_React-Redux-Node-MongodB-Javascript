@@ -1,7 +1,7 @@
 const express=require('express')
 const router=express.Router()
-const multer=require('multer')
-const {addPost,updatePost,deletePost,likePost,getPost,timelinePost,userPost,addComment,getPostComments,reportPost}=require('../controllers/postCtrl');
+const multer=require('multer');
+const {addPost,updatePost,deletePost,likePost,getPost,timelinePost,userPost,addComment,getPostComments,reportPost, blockPost}=require('../controllers/postCtrl');
 const check = require('../middleware/verify');
 
 
@@ -44,6 +44,8 @@ router.post('/addcomment/:id',addComment)
 router.get('/getcomments/:id',getPostComments)
 
 router.post('/report/:id',reportPost)
+
+router.get('/blockPost/:id',blockPost)
 
 
 

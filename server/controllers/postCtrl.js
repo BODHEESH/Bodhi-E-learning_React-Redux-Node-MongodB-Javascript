@@ -125,17 +125,32 @@ const getPost=async(req,res)=>{
     }
  }
 
+
  const reportPost=async(req,res)=>{
+    console.log(req.body.postId,req.body.userId);
     const newReport=new Report(req.body)
     try {
         const report=await newReport.save()
+        await Post.updateOne({_id:req.body.postId},{$push:{reports:req.body.userId}}) 
         res.json(report)
     } catch (error) {
         res.json(error)
     } 
  }
 
+ 
+ const blockPost=async(req,res)=>{
+    try {
+       const response=await Post.findByIdAndUpdate({_id:req.params.id},{$set:{reportedStatus:"true"}}) 
+       console.log(response);   
+       res.json(response)  
+    } catch (error) {
+      res.json(error)  
+    }
+ }
 
 
 
-  module.exports={addPost,updatePost,deletePost,likePost,getPost,timelinePost,userPost,addComment,getPostComments,reportPost}
+
+  module.exports={addPost,updatePost,deletePost,likePost,getPost,
+    timelinePost,userPost,addComment,getPostComments,reportPost,blockPost}

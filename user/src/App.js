@@ -19,8 +19,12 @@ import Testtwo from './Pages/User/Testtwo';
 import CourseFeed from './Pages/User/CourseFeed';
 import Landtest from './Pages/User/Landtest';
 import Mambaone from './Pages/User/Mambaone';
-import Notif from './Components/Component/Notif';
 import Allusers from './Pages/User/Allusers';
+import AdminReportPage from './Pages/Admin/AdminReportPage';
+import BookmarkedCourse from './Pages/User/BookmarkedCourse';
+import Footer from './Components/components/common/footer/Footer';
+
+
 
 function App() {
   return (
@@ -36,16 +40,20 @@ function App() {
               <Route path='/chat' element={<Chat/>}/> 
               <Route path='/coursefeed' element={<CourseFeed/>}/> 
               <Route path='/allusers' element={<Allusers/>}/> 
+              <Route path='/savedcourses' element={<BookmarkedCourse/>}/> 
 
 
 
-              <Route path='/notification' element={<Notif/>} />
+
               <Route path='/mamba1' element={<Mambaone/>} />
               <Route path='/landingtest' element={<Landtest/>} />
               <Route path='/test' element={<Test/>} />
               <Route path='/test2' element={<Testtwo/>} />
               <Route path='/viewcourse/:_id' element={<CourseView/>} />
-              <Route path='story' element={<Roundedstory />} />
+
+
+
+              <Route path='footer' element={<Footer />} />
 
           </Routes>
           <Routes>  
@@ -53,6 +61,7 @@ function App() {
               <Route path='/admin-users' element={<AdminHomePage/>}/> 
               <Route path='/admin-posts' element={<AdminPostPage/>}/> 
               <Route path='/admin-login' element={<AdminLogin/>}/>  
+              <Route path='/admin-reports' element={<AdminReportPage/>}/>
           </Routes>
        </Router>
     </div>

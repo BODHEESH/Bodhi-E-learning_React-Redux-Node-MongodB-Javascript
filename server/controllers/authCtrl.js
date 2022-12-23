@@ -4,6 +4,8 @@ const jwt=require('jsonwebtoken')
 const userModel = require('../models/userModel')
 const userVerification = require("../models/verification");
 const nodemailer=require('nodemailer')
+const Notification= require('../models/notificationSchema')
+const notificationSchema = require('../models/notificationSchema')
 
   /* -------------------------------------------------------------------------- */
    /*                                email config                                */
@@ -15,7 +17,7 @@ const nodemailer=require('nodemailer')
       pass: "bxnheviauygqsfke",
     },
   })
-
+ 
 
 
 
@@ -398,6 +400,64 @@ const searchUser=async(req,res)=>{
   }
 }
 
+
+
+const Notifications=async(req,res)=>{
+  const notification=new Notification(req.body)
+  try {
+      const notifications=await notification.save()
+      res.json(notifications)
+  } catch (error) {
+      res.json(error)
+  }
+
+}
+
+
+const getNotifications=async(req,res)=>{
+  try {
+    const notification= await Notification.find({receiverId:req.params.id}).populate("senderId")
+    let count = notification.filter((obj) => {
+      if (obj.status == "true") {
+        return obj;
+      }
+    }); 
+    let countLength = count.length;
+    console.log(countLength,'lllllllllll');
+    res.json({notification,countLength}) 
+  } catch (error) {
+    res.json(error)
+  }
+
+}
+
+const deleteNotifications=async(req,res)=>{
+  try {
+    const res=await Notification.deleteMany({receiverId:req.params.id})
+    if(res){
+      res.json('success')
+    }  
+  } catch (error) {
+    res.json(error)
+  }
+}
+
+const ReadNotification = async (req, res) => {
+  console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkk',req.params.userId);
+  try {
+    let data = await notificationSchema.updateMany(
+      { userId: req.params.userId },
+      { $set: {status:"false"} }
+    );
+    console.log(data,"auth controller dataaaaaaaaaaaaa");
+    res.status(200).json("updated");  
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+
+
     
 
 
@@ -405,5 +465,6 @@ const searchUser=async(req,res)=>{
 module.exports={authCtrlRegister,authCtrlLogin,updateUser,
   deleteUser,getUser,unFollowUser,followUser,getUserdata,
   getSuggestions,verifyOtp,resendOTP, sendPasswordLink,
-  updatePassword,getAllusers, searchUser
+  updatePassword,getAllusers, searchUser, Notifications,
+  getNotifications, deleteNotifications, ReadNotification
 }    

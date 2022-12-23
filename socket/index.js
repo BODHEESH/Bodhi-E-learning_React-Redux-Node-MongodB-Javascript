@@ -7,7 +7,6 @@ const io=require("socket.io")(2002,{
 let users=[]
 
 const addUser=(userId,socketId)=>{
-    console.log(userId,socketId,"user id socket id in socket index");
     !users.some((user)=>user.userId===userId)&&
     users.push({userId,socketId})
 
@@ -51,15 +50,25 @@ io.on("connection",(socket)=>{
     /* -------------------------------------------------------------------------- */
     /*                              For Notifications                             */
     /* -------------------------------------------------------------------------- */
+    // socket.on("sendNotification",({senderId,receiverId,type})=>{
+    //     console.log(senderId,receiverId,type);
+    //    const receiver=getUser(receiverId)
+    //    console.log(receiver,"-----------------------------------");
+    //    io.to(receiver.socketId).emit("getNotification",{
+    //       senderId,
+    //       type,
+    //    })  
+    // })   
+    
+
     socket.on("sendNotification",({senderId,receiverId,type})=>{
-        console.log(senderId,receiverId,type);
-       const receiver=getUser(receiverId)
-       console.log(receiver,"-----------------------------------");
-       io.to(receiver.socketId).emit("getNotification",{
-          senderId,
-          type,
-       })  
-    })   
+        const receiver=getUser(receiverId)
+        console.log(receiver);
+        io.to(receiver?.socketId).emit("getNotification",{
+           senderId,
+           type,
+        })
+     }) 
 
     /* -------------------------------------------------------------------------- */
     /*                               when disconnect                              */

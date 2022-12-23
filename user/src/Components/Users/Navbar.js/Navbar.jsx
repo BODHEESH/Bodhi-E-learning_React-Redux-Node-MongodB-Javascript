@@ -19,6 +19,7 @@ import { BiHome} from "react-icons/bi";
 import { FiMessageSquare} from "react-icons/fi";
 import { MdNotificationsNone } from "react-icons/md";
 import NotFound from '../../NotFound';
+import {format}  from 'timeago.js'
 
 
 import bodhiLenear from "../../../assets/bodhiLenear.png";
@@ -34,52 +35,90 @@ function Navbar({ socket }) {
   const [notifications, setNotifications] = useState([])
   const [showNotification, setShowNotification] = useState(false)
   const [username, setUsername] = useState('')
-
   const [search, setSearch] = useState('')
   const [userFound, setUserFound] = useState([])
   const [searchModal, setSearchModal] = useState(false)
+  const [sender,setSender]=useState('')
   const [error,setError]=useState('')
+  const [count,setCount]=useState('')
+  const [change,setChange]=useState()
   
 
-  useEffect(() => {
-    socket?.on("getNotification", data => {
-      setNotifications((prev) => [...prev, data])
+
+
+console.log(user,"uuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssssssssssssssserrrrrrrrrrrrrrrrrr");
+
+
+
+  useEffect(()=>{
+    socket?.on("getNotification",data=>{
+      setChange(new Date())
     })
-  }, [socket])
+   
+  },[socket])
 
-  // console.log(notifications, "notification on nav bar");
-  // console.log(notifications.length,"---");
-  let num = notifications.length
+   useEffect(()=>{
+    const fetchNotification = async () => {
+      axios.get(`http://localhost:5000/notification/${user._id}`).then((response)=>{
+      setNotifications(response.data.notification)
+      setCount(response.data.countLength)
+    }) }
+    fetchNotification()
+   },[count,socket,change])
+  
+  console.log(count,'kkkkkkkkkkkkkkkkkkkkk');
 
 
-
-
-
-  const displayNotifications = ({ senderId, type }) => {
-    try {
-      const fetchUser = async () => {
-        const response = await axios.get('/findUser/' + senderId)
-        const username = response.data.username
-        const userProfilePic = response.data.profilePicture
-        setUsername(username)
-        // setUserProfilePic(userProfilePic)
+  const handleRead=async(e)=>{
+    setShowNotification(!showNotification)
+    console.log("423856923456239456238469875698");
+      try {
+        const { data } = await axios.put(`http://localhost:5000/notification/viewed/${user._id}`);
+        console.log(data,"daaaaaaaaaaaataaaaaaaaaaaaaaaaaa");
+        setCount('')
+      } catch (error) {
+        console.log(error);
       }
-      fetchUser()
-    } catch (error) {
-      console.log(error)
-    }
+   }
 
-     let action;
-    if (type === 1) {
-      action = "liked your post";
-    } else if (type === 2) {
-      action = "commented on your post";
-    } else {
-      action = "viewed your profile";
-    }
-    return (
-      <span className="notification">{`${senderId} ${action} your post.`}</span>
-    )
+
+
+
+
+
+
+
+
+
+
+
+
+  // const displayNotifications = ({ senderId, type }) => {
+  //   try {
+  //     const fetchUser = async () => {
+  //       const response = await axios.get('/findUser/' + senderId)
+  //       const username = response.data.username
+  //       const userProfilePic = response.data.profilePicture
+  //       setUsername(username)
+  //       // setUserProfilePic(userProfilePic)
+  //     }
+  //     fetchUser()
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+
+  //    let action;
+  //   if (type === 1) {
+  //     action = "liked your post";
+  //   } else if (type === 2) {
+  //     action = "commented on your post";
+  //   } else {
+  //     action = "viewed your profile";
+  //   }
+  //   return (
+  //     <span className="notification">{`${senderId} ${action} your post.`}</span>
+  //   )
+  // };
     
     // let action;
     // if (type === 1) {
@@ -119,12 +158,12 @@ function Navbar({ socket }) {
     //   </div>
     //   // <span className="notification">{`${senderId} ${action} your post.`}</span>
     // );
-  };
 
-  const handleRead = () => {
-    // setNotifications([])
-    setShowNotification(false)
-  }
+
+  // const handleRead = () => {
+  //   // setNotifications([])
+  //   setShowNotification(false)
+  // }
 
   const handleSearch = async (e) => {
     try {
@@ -142,8 +181,6 @@ function Navbar({ socket }) {
     }
 
   }
-
-
 
 
   const handleLogout = async (e) => {
@@ -210,9 +247,13 @@ function Navbar({ socket }) {
               {/* <ChatIcon /> */}
             </div>
             <div className='topbarIconItem flex'>
+              <MdNotificationsNone className='text-3xl' onClick={(e) =>handleRead(e)} />
+              {count!==0 &&<span className="topbarIconBadge">{count}</span>}             
+            </div>
+            {/* <div className='topbarIconItem flex'>
               <MdNotificationsNone className='text-3xl' onClick={() => setShowNotification(!showNotification)} />
               { notifications && <span className="topbarIconBadge ">{notifications.length}</span>}             
-            </div>
+            </div> */}
           </div>
           <>
             <div class="flex justify-center">
@@ -247,20 +288,43 @@ function Navbar({ socket }) {
           {/* <button onClick={(e)=>handleLogout(e)}>Logout</button> */}
         </div>
       </div> }
-      {showNotification && 
-        <div className='notifications'>
-          {notifications.map((n) => displayNotifications(n))}
-          <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-collapse-toggle="toast-default" aria-label="Close">
-            <span class="sr-only">Close</span>
-            <svg class="w-5 h-5" fill="currentColor" onClick={handleRead} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>}
+      {showNotification ?(
+     <>
+     <div class="notificationDrop absolute right-0 z-20 w-100 py-2   bg-white rounded-md shadow-xl dark:bg-gray-200 m-5 mr-52 overflow-y-auto max-h-44 scrollbar-hide">
+       {notifications?.length !== 0 ? (
+         notifications?.map((obj) => {
+           return (
+             <a  href="#" class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-blue-300 dark:hover:text-white">
+              <img className="w-10 h-10 rounded-full"  src={obj.senderId.profilePicture ? PF + obj.senderId.profilePicture : 'https://i.stack.imgur.com/34AD2.jpg'}></img>
+
+               <div class="mx-1">
+                 <h1 class="text-sm font-bold text-gray-700 dark:text-gray-900">
+                   {obj.senderId.username}
+                    
+                   {obj.type==='1' && <span class="text-sm text-gray-900 dark:text-gray-900 "> Liked your post</span> }
+                   {obj.type==='2' && <span class="text-sm text-gray-900 dark:text-gray-900 "> commented on your post</span> }
+                   {obj.type==='3' && <span class="text-sm text-gray-900 dark:text-gray-900 "> viewed your profile </span> }
+                 </h1>
+                  
+                 <span className="text-xs font-semibold text-gray-900">
+                   {format(obj.createdAt)}
+                 </span>
+               </div>
+             </a>
+           );
+         })
+       ) : (
+         <p className="p-2 text-center font-bold">No notifications</p>
+       )}
+     </div>
+   </>
+ ): null}
         {searchModal ? (
         <>
 
           <div className="p-10 mr-8  justify-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 ">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              <div className="border-0 rounded-xl shadow-lg relative flex flex-col min-w-[300px] bg-gray-200   ">
+              <div className="border-0 rounded-xl shadow-lg relative flex flex-col min-w-[300px] bg-gray-100   ">
                 {userFound.map((u) => (
                   <div className="flex">
                     <div className="p-4 flex  items-center">

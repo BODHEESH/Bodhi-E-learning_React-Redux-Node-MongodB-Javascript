@@ -13,6 +13,7 @@ import { logout } from "../../../redux/userSlice";
 import { MdRssFeed } from "react-icons/md";
 import { GiTeacher } from "react-icons/gi";
 import { GiSpellBook } from "react-icons/gi";
+import { MdSlowMotionVideo } from "react-icons/md";
 
 
 function Sidebar() {
@@ -34,7 +35,7 @@ function Sidebar() {
         { name: "Upload Course", link: "/userProfile", icon: BiMessageSquareAdd },
         { name: "All Users", link: "/allusers", icon: GiTeacher },
         { name: "Courses Available", link: "/coursefeed", icon: GiSpellBook },
-        { name: "Setting", link: "/home", icon: RiSettings4Line },
+        { name: "Saved courses", link: "/savedcourses", icon: MdSlowMotionVideo },
         { name: "My Profile", link: "/userProfile", icon: CgProfile ,bottom:true},
         { name: "Logout", link: "/", icon: HiOutlineLogout ,},
       ];
